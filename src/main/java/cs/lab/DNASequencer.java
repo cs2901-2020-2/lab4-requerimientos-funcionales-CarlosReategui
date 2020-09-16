@@ -10,7 +10,17 @@ public class  DNASequencer {
         logger.info("Starting sequencer...");
     }
 
-    public String calculate(List<String> part){
-        return "AGATTACAGA";
+    public String calculate(List<String> part) {
+        String result = part.get(0);
+        for (int i = 1; i < part.size(); ++i) {
+            String subsequence = "";
+            for (int j = 0; j < part.get(i).length(); ++j) {
+                subsequence += part.get(i).charAt(j);
+                if (!result.contains(subsequence)) {
+                    result += part.get(i).charAt(j);
+                }
+            }
+        }
+        return result.toString();
     }
 }

@@ -10,17 +10,28 @@ public class  DNASequencer {
         logger.info("Starting sequencer...");
     }
 
-    public String calculate(List<String> part) {
-        String result = part.get(0);
-        for (int i = 1; i < part.size(); ++i) {
-            String subsequence = "";
-            for (int j = 0; j < part.get(i).length(); ++j) {
-                subsequence += part.get(i).charAt(j);
-                if (!result.contains(subsequence)) {
-                    result += part.get(i).charAt(j);
+    public void checkIfStringHasMoreThanTwoHundredCharacters(String subsequence) throws SubsequenceLengthException {
+        if (subsequence.length() > 200) {
+            throw new SubsequenceLengthException("A subsequence exceeds 200 characters");
+        }
+    }
+
+    public String calculate(List<String> parts) throws SubsequenceLengthException, SubsequenceListSizeException {
+        if (parts.size() > 160000) {
+            throw new SubsequenceListSizeException("Too many subsequences");
+        }
+        checkIfStringHasMoreThanTwoHundredCharacters(parts.get(0));
+        StringBuilder solution = new StringBuilder(parts.get(0));
+        for (int i = 1; i < parts.size(); ++i) {
+            StringBuilder subsequence = new StringBuilder();
+            checkIfStringHasMoreThanTwoHundredCharacters(parts.get(i));
+            for (int j = 0; j < parts.get(i).length(); ++j) {
+                subsequence.append(Character.toString(parts.get(i).charAt(j)));
+                if (!solution.toString().contains(subsequence)) {
+                    solution.append(Character.toString(parts.get(i).charAt(j)));
                 }
             }
         }
-        return result.toString();
+        return solution.toString();
     }
 }

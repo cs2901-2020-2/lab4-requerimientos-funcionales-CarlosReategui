@@ -8,14 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@Test
 public class DNASequencerTest {
 
-    public void testCase0() throws IOException {
+    @Test
+    public void testCase0() throws Exception {
         generic(0);
     }
 
-    private void generic(int i) throws IOException {
+    @Test(expectedExceptions = SubsequenceLengthException.class)
+    public void testCase1() throws SubsequenceLengthException, Exception {
+        generic(1);
+    }
+
+    @Test(expectedExceptions = SubsequenceListSizeException.class)
+    public void testCase2() throws SubsequenceListSizeException, Exception {
+        generic(2);
+    }
+
+    @Test(invocationCount = 50, threadPoolSize = 50)
+    public void testCase4() throws IOException, Exception {
+        generic(0);
+    }
+
+    private void generic(int i) throws IOException, Exception {
         List<String> input = readInput(i);
         String output = readOutput(i);
         DNASequencer sequencer = new DNASequencer();

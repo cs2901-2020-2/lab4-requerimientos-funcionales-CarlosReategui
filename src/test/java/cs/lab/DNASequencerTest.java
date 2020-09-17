@@ -27,7 +27,11 @@ public class DNASequencerTest {
 
     @Test(invocationCount = 50, threadPoolSize = 50)
     public void testCase4() throws IOException, Exception {
+        Long startTime = System.currentTimeMillis();
         generic(0);
+        Long endTime = System.currentTimeMillis();
+        Long elapsedTime = endTime - startTime;
+        Assert.assertTrue(elapsedTime <= 100);
     }
 
     private void generic(int i) throws IOException, Exception {
